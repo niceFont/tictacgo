@@ -31,19 +31,19 @@ func init() {
 
 func (g *Game) checkIfOver() bool {
 	for i := 0; i < len(g.board); i++ {
-		if g.board[i][0] != "#" && g.board[i][0] == g.board[i][1] && g.board[i][1] == g.board[i][2] {
+        if full := checkFields(g.board[i][0], g.board[i][1], g.board[i][2]); full {
 			return true
 		}
-		if g.board[0][i] != "#" && g.board[0][i] == g.board[1][i] && g.board[1][i] == g.board[2][i] {
+        if full := checkFields(g.board[0][i], g.board[1][i], g.board[2][i]); full {
 			return true
 		}
 	}
 
-	if g.board[0][0] != "#" && g.board[0][0] == g.board[1][1] && g.board[1][1] == g.board[2][2] {
+    if full := checkFields(g.board[0][0], g.board[1][1], g.board[2][2]); full {
 		return true
 	}
 
-	if g.board[0][2] != "#" && g.board[0][2] == g.board[1][1] && g.board[1][1] == g.board[2][0] {
+    if full := checkFields(g.board[0][2], g.board[1][1], g.board[2][0]); full {
 		return true
 	}
 
@@ -51,6 +51,14 @@ func (g *Game) checkIfOver() bool {
 		return true
 	}
 	return false
+}
+
+func checkFields(field1, field2, field3 string) bool {
+    if field1 != "#" && field1 == field2 && field2 == field3 {
+        return true
+    } else {
+        return false
+    }
 }
 
 func (g *Game) move(playmove int) error {
